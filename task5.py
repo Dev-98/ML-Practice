@@ -1,10 +1,11 @@
 import streamlit as st
-import os
+# import os
 from transformers import pipeline
 from transformers import PegasusForConditionalGeneration, PegasusTokenizer
  
 # Pick model
 model_name = "google/pegasus-xsum"
+
 # Load pretrained tokenizer
 pegasus_tokenizer = PegasusTokenizer.from_pretrained(model_name)
 pegasus_model = PegasusForConditionalGeneration.from_pretrained(model_name)
