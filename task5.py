@@ -1,14 +1,9 @@
 import streamlit as st
 # import os
 from transformers import pipeline
-from transformers import PegasusForConditionalGeneration, PegasusTokenizer
- 
-# Pick model
-model_name = "google/pegasus-xsum"
 
-# Load pretrained tokenizer
-pegasus_tokenizer = PegasusTokenizer.from_pretrained(model_name)
-pegasus_model = PegasusForConditionalGeneration.from_pretrained(model_name)
+# Pick model
+summarizer = pipeline("summarization",model= "t5-base",tokenizer="t5-base",framework="pt")
 
 st.title("Text Summarizer")
 
@@ -19,13 +14,13 @@ if file:
     txt = file.read()
     st.text_area("Text Before Summary",txt)
 
-    summarizer = pipeline(
-    "summarization", 
-    model=model_name, 
-    tokenizer=pegasus_tokenizer, 
-    framework="pt"
-    )
+    # summarizer = pipeline(
+    # "summarization", 
+    # model=model_name, 
+    # tokenizer=pegasus_tokenizer, 
+    # framework="pt"
+    # )
  
-    summary = summarizer(txt, min_length=100, max_length=500)
+    summary = summarizer(txt, min_length=100, max_length=500,do_sample = False)
     
     st.text_area("Summarized Text",summary[0]["summary_text"])
